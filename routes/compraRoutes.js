@@ -1,8 +1,9 @@
 // routes/compraRoutes.js
-const express = require('express');
-const router = express.Router();
-const controller = require('../controllers/compraController');
+const express  = require('express');
+const router   = express.Router();
+const ctrl     = require('../controllers/compraController');
 
-router.post('/', controller.comprarIngresso);
+router.get('/',  ctrl.listarCompras);      //  ← novo
+router.post('/', ctrl.comprarIngresso);
 
 module.exports = router;
