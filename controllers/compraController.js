@@ -30,10 +30,8 @@ const listarCompras = async (_req, res) => {
 
 const comprarIngresso = async (req, res) => {
   try {
-    const { ingressoId, quantidade } = req.body;
-    const usuarioId = req.user?.id;
+    const { ingressoId, quantidade, email } = req.body;
 
-    if (!usuarioId)     return res.status(401).json({ error: 'Usuário não autenticado.' });
     if (!ingressoId || !quantidade)
       return res.status(400).json({ error: 'Dados incompletos.' });
 
@@ -45,12 +43,11 @@ const comprarIngresso = async (req, res) => {
     ingresso.quantidade -= quantidade;
     await ingresso.save();
 
-    const novaCompra = await Compra.create({ usuarioId, ingressoId, quantidade });
+    const novaCompra = await Compra.create({ email, ingressoId, quantidade });
 
     const compraDetalhada = await Compra.findByPk(novaCompra.id, {
       include: [
-        { model: Ingresso, as: 'ingresso', include: [{ model: Evento, as: 'evento' }] },
-        { model: Usuario,  as: 'usuario' }
+        { model: Ingresso, as: 'ingresso', include: [{ model: Evento, as: 'evento' }] }
       ]
     });
 
