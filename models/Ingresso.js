@@ -1,4 +1,3 @@
-// models/Ingresso.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 const Evento = require('./Evento');
@@ -18,7 +17,6 @@ const Ingresso = sequelize.define('Ingresso', {
   },
 });
 
-// Relacionamento: Muitos ingressos pertencem a um evento
 Ingresso.belongsTo(Evento, {
   foreignKey: 'eventoId',
   as: 'evento',

@@ -1,4 +1,3 @@
-// controllers/ingressoController.js
 const { Ingresso, Evento } = require('../models');
 
 const criarIngresso = async (req, res) => {

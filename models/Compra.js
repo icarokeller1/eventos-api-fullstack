@@ -1,4 +1,3 @@
-// models/Compra.js
 const { DataTypes } = require('sequelize');
 const sequelize     = require('../config/database');
 const Ingresso      = require('./Ingresso');
@@ -13,7 +12,6 @@ const Compra = sequelize.define('Compra', {
   tableName: 'Compras'
 });
 
-/* ─────────── associações ─────────── */
 Compra.belongsTo(Ingresso, {
   as: 'ingresso',
   foreignKey: { name: 'ingressoId', allowNull: false }

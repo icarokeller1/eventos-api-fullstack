@@ -1,10 +1,5 @@
-// controllers/compraController.js
 const { Compra, Ingresso, Usuario, Evento } = require('../models');
 
-/**
- * GET /api/purchase
- * Lista todas as compras com ingresso, evento e usuário relacionados.
- */
 const listarCompras = async (_req, res) => {
   try {
     const compras = await Compra.findAll({
@@ -33,14 +28,10 @@ const listarCompras = async (_req, res) => {
   }
 };
 
-/**
- * POST /api/purchase
- * Processa a compra de ingressos.
- */
 const comprarIngresso = async (req, res) => {
   try {
     const { ingressoId, quantidade } = req.body;
-    const usuarioId = req.user?.id || req.body.usuarioId; // ajuste conforme sua auth
+    const usuarioId = req.user?.id || req.body.usuarioId;
 
     if (!ingressoId || !quantidade) {
       return res.status(400).json({ error: 'Dados incompletos.' });
@@ -55,14 +46,11 @@ const comprarIngresso = async (req, res) => {
       return res.status(400).json({ error: 'Ingressos insuficientes.' });
     }
 
-    // Atualiza estoque
     ingresso.quantidade -= quantidade;
     await ingresso.save();
 
-    // Registra compra
     const novaCompra = await Compra.create({ usuarioId, ingressoId, quantidade });
 
-    // Retorna detalhes completos
     const compraDetalhada = await Compra.findByPk(novaCompra.id, {
       include: [
         {
