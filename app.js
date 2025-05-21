@@ -20,5 +20,10 @@ app.use('/api/purchase', compraRoutes);
 const authRoutes = require('./routes/authRoutes');
 app.use('/api/users', authRoutes);
 
+const { sequelize } = require('./models');
+(async () => {
+  await sequelize.sync({ alter: true });
+})();
+
 
 module.exports = app;
