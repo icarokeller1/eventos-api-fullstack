@@ -1,25 +1,21 @@
 const { Compra, Ingresso, Usuario, Evento } = require('../models');
 
-const listarCompras = async (_req, res) => {
-  try {
-    const compras = await Compra.findAll({
-      include: [
-        {
-          model: Ingresso,
-          as: 'ingresso',
-          include: [{ model: Evento, as: 'evento' }]
-        },
-        { model: Usuario, as: 'usuario' }
-      ],
-      order: [['createdAt', 'DESC']]
-    });
-
-    res.json(compras);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Erro ao listar compras.' });
-  }
-};
+const compras = await Compra.findAll({
+  include: [
+    {
+      model: Ingresso,
+      as: 'ingresso',
+      attributes: ['tipo'],
+      include: [{ model: Evento, as: 'evento', attributes: ['nome'] }]
+    },
+    {
+      model: Usuario,
+      as: 'usuario',
+      attributes: ['nome']
+    }
+  ],
+  order: [['createdAt', 'DESC']]
+});
 
 const comprarIngresso = async (req, res) => {
   try {
