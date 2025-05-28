@@ -1,0 +1,197 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2025-05-28T21:47:10.219963Z",
+  "__export_source": "chatgpt-generated",
+  "resources": [
+    {
+      "_id": "wrk_712c6ba6",
+      "_type": "workspace",
+      "name": "API Eventos Tests"
+    },
+    {
+      "_id": "env_3e0073ad",
+      "_type": "environment",
+      "parentId": "wrk_712c6ba6",
+      "name": "Base Environment",
+      "data": {
+        "base_url": "https://eventos-api-fullstack-3tcq.onrender.com",
+        "token": ""
+      }
+    },
+    {
+      "_id": "req_9c195cf8",
+      "_type": "request",
+      "parentId": "wrk_712c6ba6",
+      "name": "Registrar usu\u00e1rio",
+      "method": "POST",
+      "url": "{{ base_url }}/api/users/register",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Tester\",\n  \"email\": \"user+greiyj@mail.com\",\n  \"senha\": \"123456\"\n}"
+      },
+      "tests": "const { expect } = chai;\nexpect(response.status).to.equal(201);\n"
+    },
+    {
+      "_id": "req_edf9e86a",
+      "_type": "request",
+      "parentId": "wrk_712c6ba6",
+      "name": "Login",
+      "method": "POST",
+      "url": "{{ base_url }}/api/users/login",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"user+greiyj@mail.com\",\n  \"senha\": \"123456\"\n}"
+      },
+      "tests": "const { expect } = chai;\nconst body = JSON.parse(response.body);\ninsomnia.environment.set(\"token\", body.token);\nexpect(response.status).to.equal(200);\n"
+    },
+    {
+      "_id": "req_ffe988a8",
+      "_type": "request",
+      "parentId": "wrk_712c6ba6",
+      "name": "Criar evento",
+      "method": "POST",
+      "url": "{{ base_url }}/api/events",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"API Test Event\",\n  \"data\": \"2026-01-01\",\n  \"local\": \"Online\",\n  \"descricao\": \"Gerado via Insomnia\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_c4b9ee57",
+      "_type": "request",
+      "parentId": "wrk_712c6ba6",
+      "name": "Listar eventos",
+      "method": "GET",
+      "url": "{{ base_url }}/api/events"
+    },
+    {
+      "_id": "req_a4f32c97",
+      "_type": "request",
+      "parentId": "wrk_712c6ba6",
+      "name": "Atualizar evento (id=1)",
+      "method": "PUT",
+      "url": "{{ base_url }}/api/events/1",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"API Test Event\",\n  \"data\": \"2026-01-01\",\n  \"local\": \"Atualizado\",\n  \"descricao\": \"Gerado via Insomnia\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_380b01ad",
+      "_type": "request",
+      "parentId": "wrk_712c6ba6",
+      "name": "Deletar evento (id=1)",
+      "method": "DELETE",
+      "url": "{{ base_url }}/api/events/1",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_bb89ebf5",
+      "_type": "request",
+      "parentId": "wrk_712c6ba6",
+      "name": "Criar ingresso",
+      "method": "POST",
+      "url": "{{ base_url }}/api/tickets",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"tipo\": \"VIP\",\n  \"preco\": 100,\n  \"quantidade\": 10,\n  \"eventoId\": 1\n}"
+      },
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_ee366428",
+      "_type": "request",
+      "parentId": "wrk_712c6ba6",
+      "name": "Listar ingressos",
+      "method": "GET",
+      "url": "{{ base_url }}/api/tickets"
+    },
+    {
+      "_id": "req_c8a63fcc",
+      "_type": "request",
+      "parentId": "wrk_712c6ba6",
+      "name": "Atualizar ingresso (id=1)",
+      "method": "PUT",
+      "url": "{{ base_url }}/api/tickets/1",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"tipo\": \"VIP\",\n  \"preco\": 120,\n  \"quantidade\": 10,\n  \"eventoId\": 1\n}"
+      },
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_2600b92c",
+      "_type": "request",
+      "parentId": "wrk_712c6ba6",
+      "name": "Deletar ingresso (id=1)",
+      "method": "DELETE",
+      "url": "{{ base_url }}/api/tickets/1",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_80cca7cc",
+      "_type": "request",
+      "parentId": "wrk_712c6ba6",
+      "name": "Comprar ingresso",
+      "method": "POST",
+      "url": "{{ base_url }}/api/purchase",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"ingressoId\": 1,\n  \"quantidade\": 1,\n  \"email\": \"user+greiyj@mail.com\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_b03f2990",
+      "_type": "request",
+      "parentId": "wrk_712c6ba6",
+      "name": "Listar compras",
+      "method": "GET",
+      "url": "{{ base_url }}/api/purchase",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ token }}"
+        }
+      ]
+    }
+  ]
+}
